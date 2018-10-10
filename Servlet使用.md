@@ -2,6 +2,8 @@ Servlet的jar包是在Tomcat的lib目录下的，所以在一个web工程中想�
 
 这也是说明了为什么Tomcat是Servlet容器的原因！
 
+实现一个Servlet具体类
+--
 ```
 import javax.servlet.*;
 import java.io.IOException;
