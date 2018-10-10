@@ -88,6 +88,22 @@ ServletConfig
 --
 
 init方法的传入参数为ServletConfig对象，那么ServletConfig有什么用呢？
+
+ServletConfig的定义
+```
+public interface ServletConfig {
+    String getServletName();
+
+    ServletContext getServletContext();
+
+    String getInitParameter(String var1);
+
+    Enumeration<String> getInitParameterNames();
+}
+
+```
+
+来看看Servlet接口的定义：
 ```
   public void init(ServletConfig servletConfig) throws ServletException {
      
@@ -97,6 +113,7 @@ init方法的传入参数为ServletConfig对象，那么ServletConfig有什么�
 ServletConfig：封装了Servlet的配置信息，并且可以获取ServletContext对象
 
 >String getInitParameter(String var1)为获取指定参数名var1对应的value
+>
 
 在xml中可以进行初始化参数如下：
 ```
@@ -133,4 +150,53 @@ name user
 value:  root
 service
 ```
+
+ServletContext
+--
+>Servlet引擎为每个WEB应用程序都创建一个对应的ServletContext对象，ServletContext对象被包含在ServletConfig对象中，调用ServletConfig.getServletConfig方法可以返回ServletContext对象的引用。
+
+由于一个WEB应用程序中的所有Servlet都共享一个ServletContext对象，所以，ServletContext对象呗称为application对象(该对象代表当前Web应用程序对象，从中可以获取到当前web对象的各个方面的信息)
+
+功能：
+
+
+```
+<!--配置当前web应用的初始化参数-->
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.oracle.nio.oracle</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jdbcUrl</param-name>
+        <param-value>jdbc:mysql:///atguigu</param-value>
+    </context-param>
+```
+
+在Servlet实现类的init函数中添加如下代码：
+```
+  public void init(ServletConfig servletConfig) throws ServletException {
+        System.out.println("init");
+        ServletContext servletContext = servletConfig.getServletContext();
+        Enumeration<String>names = servletContext.getInitParameterNames();
+        while (names.hasMoreElements()){
+            String name = names.nextElement();
+            System.out.println("name"+" "+name);
+            System.out.println("value: "+" "+servletContext.getInitParameter(name));
+        }
+    }
+```
+
+结果如下：
+```
+HelloServlet's constructor...
+init
+name driver
+value:  com.oracle.nio.oracle
+name jdbcUrl
+value:  jdbc:mysql:///atguigu
+service
+```
+
+**web应用的初始化参数与servlet的初始化参数的区别**
+web应用的初始化参数作用于整个web程序，是全局的；而servlet的初始化参数作用于特定的一个servlet，是局部的
 
