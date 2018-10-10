@@ -60,7 +60,10 @@ classes用来存放编译后输出的class文件，lib用于存放第三方jar�
 
 测试web工程是否搭建成功
 --
-在浏览器中输入：http://localhost:8080/firstweb/
+
+* 在intellij中启动tomcat服务器
+
+* 在浏览器中输入：http://localhost:8080/firstweb/
 
 结果为：
 
