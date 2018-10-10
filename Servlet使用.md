@@ -71,3 +71,14 @@ service
 service
 ```
 当关闭Tomcat服务器时，调用Servlet的destroy方法
+
+控制Servlet创建的时间
+--
+  load-on-startup属性实现
+  ```
+        load-on-startup参数：
+        配置在servlet节点中，可以指定servlet被创建的时机。
+        若为负数，则在第一次请求时才被创建和初始化同时service；
+        若为0或证书，则在当前web应用被Servlet容器加载时创建实例(创建和初始化立即就被执行)，且数字越小越早被创建
+ ```
+如果不写或者值是负数的话，那在 Servlet 容器启动时并不会初始化这个 Servlet，而会在第一次用到时才进行初始化。
