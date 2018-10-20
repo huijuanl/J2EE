@@ -3,4 +3,42 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <!--配置当前web应用的初始化参数-->
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.oracle.nio.oracle</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jdbcUrl</param-name>
+        <param-value>jdbc:mysql:///atguigu</param-value>
+    </context-param>
+    <!--配置和映射Servlet-->
+
+    <servlet>
+        <servlet-name>helloServlet</servlet-name>
+        <servlet-class>com.lihuijuan.javaweb.HelloServlet</servlet-class>
+        <!--load-on-startup也可以不设置
+        load-on-startup参数：
+        配置在servlet节点中，可以指定servlet被创建的时机。
+        若为负数，则在第一次请求时才被创建和初始化同时service；
+        若为0或证书，则在当前web应用被Servlet容器加载时创建实例(创建和初始化立即就被执行)，且数字越小越早被创建
+        -->
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>12306</param-value>
+        </init-param>
+        <load-on-startup>-1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <!--需要和某一个servlet节点的servlet-name子节点的文本节点一致-->
+        <servlet-name>helloServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
+        <!--映射具体的访问路径：/代表当前web应用的根目录.-->
+    </servlet-mapping>
+
 </web-app>
